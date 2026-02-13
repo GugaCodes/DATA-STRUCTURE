@@ -1,0 +1,52 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+void insereValor(int valor, int numeros[], int* qtd){
+
+	//valor = 0;
+	numeros[*qtd] = valor;
+	(*qtd)++;
+
+}
+
+int bubble_sort(int array[], int n) {
+	for (int i = 0; i < n - 1; i++) {
+		if (array[i] > array[i + 1]){
+			int troca;
+			troca = array[i];
+			array[i] = array[i + 1];
+			array[i + 1] = troca;
+
+		}
+	}
+	return array;
+}
+
+int main(){
+
+	int vetor[5];
+	int qtd = 0;
+	
+	insereValor(4, vetor, &qtd);
+	insereValor(69, vetor, &qtd);
+	insereValor(16, vetor, &qtd);
+	insereValor(20, vetor, &qtd);
+	insereValor(50, vetor, &qtd);
+
+	/*for (int j = 0; j < 5; j++) {
+		printf("%d\n",vetor[j]);
+	}*/
+
+	bubble_sort(vetor, vetor[0]);
+	bubble_sort(vetor, vetor[1]);
+	bubble_sort(vetor, vetor[2]);
+	bubble_sort(vetor, vetor[3]);
+	bubble_sort(vetor, vetor[4]);
+
+	for (int j = 0; j < 5; j++) {
+		printf("%d\n", vetor[j]);
+	}
+
+
+	//CORRIGIR ERRO!!!!!!
+}
