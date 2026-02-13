@@ -9,17 +9,19 @@ void insereValor(int valor, int numeros[], int* qtd){
 
 }
 
-int bubble_sort(int array[], int n) {
+void bubble_sort(int array[], int n) {
 	for (int i = 0; i < n - 1; i++) {
-		if (array[i] > array[i + 1]){
-			int troca;
-			troca = array[i];
-			array[i] = array[i + 1];
-			array[i + 1] = troca;
+		for (int j = 0; j < n - i - 1; j++) {
+			if (array[j] > array[j + 1]){
+				int troca;
+				troca = array[j];
+				array[j] = array[j + 1];
+				array[j + 1] = troca;
 
+			}
 		}
 	}
-	return array;
+	
 }
 
 int main(){
@@ -37,16 +39,15 @@ int main(){
 		printf("%d\n",vetor[j]);
 	}*/
 
-	bubble_sort(vetor, vetor[0]);
-	bubble_sort(vetor, vetor[1]);
-	bubble_sort(vetor, vetor[2]);
-	bubble_sort(vetor, vetor[3]);
-	bubble_sort(vetor, vetor[4]);
+	bubble_sort(vetor, qtd);
+	
 
-	for (int j = 0; j < 5; j++) {
-		printf("%d\n", vetor[j]);
+	for (int k = 0; k < 5; k++) {
+		printf("%d\n", vetor[k]);
 	}
 
+	//printf("%d", vetor[4]);
 
-	//CORRIGIR ERRO!!!!!!
+
+	
 }
