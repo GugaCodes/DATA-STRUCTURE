@@ -1,0 +1,21 @@
+	#include <stdio.h>
+
+void imprime_int(const int* p) {
+	if (p == NULL) {
+		printf("O ponteiro eh nulo\n");
+	}
+	else {
+		printf("O valor eh: %d\n", *p);
+	}
+}
+
+	int main() {
+
+		int* p = 111;
+		imprime_int(&p);
+		imprime_int(NULL);
+
+
+
+		return 0;
+	}
