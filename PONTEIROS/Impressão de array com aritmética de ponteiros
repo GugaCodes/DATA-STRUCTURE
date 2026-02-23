@@ -1,0 +1,20 @@
+	#include <stdio.h>
+
+
+void aponta_zero(int** pp, int* zero) {
+	*pp = zero;
+}
+
+	int main() {
+		int x = 42;
+		int zero = 0;
+
+		int* p = &x;
+		printf("O valor de *p = %d\n", *p);
+		aponta_zero(&p, &zero);
+		printf("O valor de *p apos chamar funcao = %d\n", *p);
+
+
+
+		
+	}
