@@ -1,0 +1,24 @@
+#include <stdio.h>
+
+int main() {
+
+	int a = 5;
+	int b = 20;
+
+	printf("O valor de A eh:  %d\n", a);
+	printf("O valor de B eh: %d\n", b);
+	printf("O endereco de A eh: %p\n", &a);
+	printf("O endereco de B eh: %p\n\n", &b);
+
+	a = 20; 
+	b = 5;
+
+	printf("O novo valor de A eh: %d\n",a);
+	printf("O novo valor de B eh: %d\n",b);
+	printf("O endereco de A eh: %p\n", &a);
+	printf("O endereco de B eh: %p", &b);
+
+
+
+	return 0;
+}
