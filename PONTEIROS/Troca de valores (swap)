@@ -1,0 +1,30 @@
+	#include <stdio.h>
+
+void swap(int* a, int* b) {
+	int temp;
+
+	temp = *a;
+	*a = *b;
+	*b = temp;
+
+}
+
+	int main() {
+		int x = 3;
+		int y = 9;
+
+		printf("%d\n", x);
+		printf("%d\n", y);
+		printf("x = %d | y = %d\n\n", x, y);
+
+		printf("SWAP VALORES\n\n");
+		swap(&x, &y);
+		printf("%d\n", x);
+		printf("%d\n", y);
+		printf("x = %d | y = %d\n", x, y);
+
+		// outro tipo de print
+
+
+		
+	}
