@@ -1,0 +1,17 @@
+#include <stdio.h>
+
+int main() {
+
+	int x = 7;
+
+	int* p = &x;
+
+	printf("o valor de X eh %d\n", *p);
+
+	*p = 42;
+	printf("O novo valor de x eh: %d", x);
+
+
+
+	return 0;
+}
