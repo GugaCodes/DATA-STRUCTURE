@@ -1,0 +1,44 @@
+//#include CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+#include <string.h>
+
+typedef struct Aluno{
+	char nome[50];
+	int ra;
+	float nota;
+ };//como se fosse um apelido
+
+
+
+void imprime_aluno(const struct Aluno* a) {
+	if ( a == NULL) {
+		printf("ERRO!");
+	}
+	else {
+		//int tamanho = strlen(a->nome);
+		printf("%d\n", a->ra);
+		printf("%f\n", a->nota);
+		for (int i = 0; i < a->nome[i] != '\0'; i++) {
+			printf("%c", a->nome[i]);
+		}
+	}
+}
+
+int main() {
+
+	//FAZENDO CADASTRO DE ALUNOS
+	char nome[] = "Gustavo";
+	Aluno Gustavo;
+	int* p = &Gustavo;
+	
+
+
+	Gustavo.ra = 1195;
+	Gustavo.nota = 9.5;
+	strcpy_s(Gustavo.nome, sizeof(Gustavo.nome),nome);
+
+	imprime_aluno(p);
+
+
+
+}
