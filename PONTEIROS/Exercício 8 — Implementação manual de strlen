@@ -1,0 +1,33 @@
+#include <stdio.h>
+#include <string.h>
+
+int meu_strlen(const char* frase) {
+	
+	int qtd = 0;
+	for(int i = 0; i < *(frase + i) != '\0'; i++) {
+		if (*(frase + i) != "\0") {
+			qtd++;
+			
+			
+		}
+		else if(*(frase + i) == NULL){
+
+			return -1;
+		}
+
+	}
+	//printf("o texto tem %d caracteres| print dentro da funcao\n", qtd);
+	return qtd;
+}
+
+
+	int main() {
+	
+		char frase[] = "";
+		size_t lenght = strlen(frase);
+
+		printf("o texto tem %d caracteres | strlen\n", lenght);
+		meu_strlen(&frase);
+
+		printf("O texto tem %d caracteres| ponteiros com return",meu_strlen(&frase));
+	}
