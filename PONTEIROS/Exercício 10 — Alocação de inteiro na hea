@@ -1,0 +1,31 @@
+//#include CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+#include <string.h>
+
+int* cria_int(int valor) {
+	int* p = malloc(sizeof(int));
+
+	if (p == NULL) {
+		//printf("ERRO DE ALOCAÇÃO1\n");
+		return NULL;
+	}
+	else {
+		p = valor;
+		return p;
+
+	}
+	free(p);
+	p = NULL;
+}
+
+
+
+int main() {
+
+	int x = cria_int(62);
+	printf("%d", x);
+	
+
+
+
+}
