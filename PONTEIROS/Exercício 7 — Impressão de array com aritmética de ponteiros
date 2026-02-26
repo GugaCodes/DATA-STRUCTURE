@@ -1,20 +1,25 @@
-	#include <stdio.h>
+/******************************************************************************
 
+                            Online C Compiler.
+                Code, Compile, Run and Debug C program online.
+Write your code in this editor and press "Run" button to compile and execute it.
 
-void aponta_zero(int** pp, int* zero) {
-	*pp = zero;
+*******************************************************************************/
+
+#include <stdio.h>
+
+void imprime_array(const int *v, int n){
+    for(int i = 0; i < n;i++){
+        printf("%d |", *(v+i));
+    }
+    
 }
-
-	int main() {
-		int x = 42;
-		int zero = 0;
-
-		int* p = &x;
-		printf("O valor de *p = %d\n", *p);
-		aponta_zero(&p, &zero);
-		printf("O valor de *p apos chamar funcao = %d\n", *p);
-
-
-
-		
-	}
+int main()
+{
+    int array[6] = {0,69,21,63,24,8};
+    int *p = array;
+    imprime_array(p,6);
+    
+    
+    
+}
