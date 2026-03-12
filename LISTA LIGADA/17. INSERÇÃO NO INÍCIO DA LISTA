@@ -1,3 +1,5 @@
+
+
 #include <stdio.h>
 #include <stdlib.h>
 //#include <iostream>
@@ -16,6 +18,17 @@ void insercao_inicio(No** head, int v) {
 
 }
 
+void imprimir(No* head) {
+    No* p = head;
+    while (p != NULL) {
+        printf("[%d] ->", p->valor);
+        p = p->prox;
+    }
+}
+
+
+
+
 int main()
 {
     No* head = NULL;
@@ -23,7 +36,9 @@ int main()
     insercao_inicio(&head, 20);
     insercao_inicio(&head, 30);
 
-    for (No* p = head; p != NULL; p = p->prox) {
-        printf("%d ->", p->valor);
-    }
+    imprimir(head);
+    
+    
 }
+
+
