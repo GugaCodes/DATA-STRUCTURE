@@ -1,0 +1,98 @@
+
+
+#include <stdio.h>
+#include <stdlib.h>
+//#include <iostream>
+
+typedef struct No {
+    int valor;
+    struct No* prox;
+}No;
+
+void insercao_inicio(No** head, int v) {
+    No* novoElemento = malloc(sizeof(No));
+    if (novoElemento == NULL) return;
+    novoElemento->valor = v;
+    novoElemento->prox = *head;
+    *head = novoElemento;
+
+}
+
+void inserir_final(No** head, int v) {
+    
+    No* novoFim = malloc(sizeof(No));
+    if (novoFim == NULL) return;
+    
+    novoFim->valor = v;
+    novoFim->prox = NULL;
+
+    if (*head == NULL) {
+        *head = novoFim;
+        return;
+    }
+
+    No* p = *head;
+    while (p->prox != NULL) {
+        p = p->prox;
+    }
+
+    p->prox = novoFim;
+}
+
+void inserir_ordenado(No** head, int v) {
+    No* novoOrdenado = malloc(sizeof(No));
+    if (novoOrdenado == NULL) return;
+    novoOrdenado->valor = v;
+
+    //CASO ESPECIAL
+    if (*head == NULL || novoOrdenado < *head ) {
+        novoOrdenado->prox = *head;
+        *head = novoOrdenado;
+        return;
+    }
+
+
+    //CASO GERAL: PERCORRER COM 2 PONTEIROS
+    No* anterior = *head;
+    No* atual = (*head)->prox;
+
+    
+    while (atual != NULL && atual->valor < v) {
+        anterior = atual;
+        atual = atual->prox;
+    }
+
+    anterior->prox = novoOrdenado;
+    novoOrdenado->prox = atual;
+
+
+
+}
+
+void imprimir(No* head) {
+    No* p = head;
+    while (p != NULL) {
+        printf("[%d] ->", p->valor);
+        p = p->prox;
+    }
+    printf("\n");
+}
+
+
+
+
+int main()
+{
+    No* head = NULL;
+    
+    insercao_inicio(&head, 20);
+    insercao_inicio(&head, 10);
+    inserir_final(&head, 9);
+    inserir_ordenado(&head, 15);
+
+    imprimir(head);
+    
+    
+}
+
+
