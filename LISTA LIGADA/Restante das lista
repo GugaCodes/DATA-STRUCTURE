@@ -1,0 +1,232 @@
+
+
+
+#include <stdio.h>
+#include <stdlib.h>
+//#include <iostream>
+
+typedef struct No {
+    int valor;
+    struct No* prox;
+}No;
+
+void insercao_inicio(No** head, int v) {
+    No* novoElemento = malloc(sizeof(No));
+    if (novoElemento == NULL) return;
+    novoElemento->valor = v;
+    novoElemento->prox = *head;
+    *head = novoElemento;
+
+}
+
+void inserir_final(No** head, int v) {
+
+    No* novoFim = malloc(sizeof(No*));
+    if (novoFim == NULL) return;
+
+    novoFim->valor = v;
+    novoFim->prox = NULL;
+
+    if (*head == NULL) {
+        *head = novoFim;
+        return;
+    }
+
+    No* p = *head;
+    while (p->prox != NULL) {
+        p = p->prox;
+    }
+
+    p->prox = novoFim;
+}
+
+void inserir_ordenado(No** head, int v) {
+    No* novoOrdenado = malloc(sizeof(No));
+    if (novoOrdenado == NULL) return;
+    novoOrdenado->valor = v;
+
+    //CASO ESPECIAL
+    if (*head == NULL || novoOrdenado < *head) {
+        novoOrdenado->prox = *head;
+        *head = novoOrdenado;
+        return;
+    }
+
+
+    //CASO GERAL: PERCORRER COM 2 PONTEIROS
+    No* anterior = *head;
+    No* atual = (*head)->prox;
+
+
+    while (atual != NULL && atual->valor < v) {
+        anterior = atual;
+        atual = atual->prox;
+    }
+
+    anterior->prox = novoOrdenado;
+    novoOrdenado->prox = atual;
+
+
+
+}
+
+void imprimir(No* head) {
+    No* p = head;
+    if (p == NULL) printf("LISTA VAZIA ");
+
+    while (p != NULL) {
+        printf("[%d] -> ", p->valor);
+        p = p->prox;
+    }
+    
+    printf("NULL\n");
+}
+
+int buscar(No* head, int v) {
+    No* atual = head;
+    while (atual != NULL) {
+        if (atual->valor == v) {
+            return atual;
+        }
+        atual = atual->prox;
+    }
+    return NULL;
+}
+
+/*void resultado_busca(No* head, int v) {
+    int resultado = buscar(&head, v);
+    if(resultado == v){
+        printf("VALOR &d encontrado", v);
+    }
+    else {
+        printf("Valor nao encontrado na lista");
+    }
+}*/
+
+void remover_por_valor(No **head, int v) {
+
+    //CASO 1
+    if (*head == NULL || (*head)->valor == v) {
+        No* temp = *head; // GUARDAMOS O VAOR DE HEAD EM UMA VARIAVEL TEMPORARIA
+        *head = (*head)->prox; // HEAD COMEÇA APONTAR PARA O PROXIMO
+        free(temp); // FREE NA VARIAVEL TEMPORARIA
+        return;
+    }
+    No* atual = (*head)->prox;
+    No* anterior = *head;
+
+    while (atual != NULL) {
+        if (atual->valor == v) // se o atual for igual ao valor
+        {
+            anterior->prox = atual->prox; // anterior recebe o proximo nó do que vamos remover, ou seja, o atual
+            free(atual);// libera o atuao
+            return;
+        }
+        anterior = atual;
+        atual = atual->prox;
+    }
+    
+}
+
+void zerar_lista(No **head)
+{
+    No* atual = (*head); // Definimos um no atual como o no apontado pelo head, ou seja, ATUAL = 10
+    No* temp = NULL; // Definimos um no temporario para ser usado no futuro, começa valendo nulo
+
+    while(atual != NULL) //Enquanto a lista não acabar roda esse loop
+    {
+        temp = atual; // O no temporario começa a valer a mesma coisa que o atual, ou seja, 10
+        atual = atual->prox; //Atual vai começar a apontar pro proximo, ou seja, 20
+        free(temp); // Liberamos o 10
+    } // Continua as iterações até limpar tudo
+
+    (*head) = NULL; //Faz a cabeça apontar para nulo
+}
+
+void reordenar(No* head) {
+    if (head == NULL) return;
+
+    for(No* i = head; i->prox != NULL; i = i->prox) // index i começa no No que head aponta, o loop vai rodar até o ultimo no, ou seja, quando o no atual apontar para nulo
+    {   
+        No* menor = i; // definimos o no menor como o primeiro no do loop, o que i está apontando 
+        for(No* j = i->prox; j != NULL; j = j->prox) // index j começa no No depois do que i esta apontando, enquanto ele não valer nulo, vai andando
+        {
+            if (j->valor < menor->valor) // se o valor apontado por j for menor que o valor do nó menor
+            {
+                menor = j; //fazemos o no menor virar o no apontado por j
+            }
+        }
+
+        if(menor != i) // se o menor for diferente do primeiro do loop
+        {
+            int temp = i->valor; // faz um temp pra guardar o valor do primeiro do loop
+            i->valor = menor->valor; // faz o valor do primeiro no do loop receber o valor do no menor
+            menor->valor = temp; // valor do no menor recebe o temp
+        }
+        imprimir(head);
+    }
+}
+
+int contar(No* head) {
+    int contar = 0;
+    while (head != NULL) {
+        contar++;
+        head = head->prox;
+    }
+    return contar;
+}
+
+void remover_ultimo(No* head) {
+    if (head == NULL) return;
+
+    if (head->prox == NULL) { // se o proximo valor depois do head for igual a null
+        free(head); // remove o único valor que tinha na lista
+        head = NULL; // head aponta para nulo, pois não há valores
+    }
+
+    No* atual = head; // no atual recebe o primeiro valor
+
+    while(atual->prox->prox != NULL) // se o proximo do proximo valor for diferente de nulo
+    {
+        atual = atual->prox; //valor atual percorre para próximo valor 
+    }
+
+    free(atual->prox); // remove o proximo valor 
+    atual->prox = NULL; // deixa o valor anterior ao que foi removido apontando para NULL
+}
+/*
+--------- ORDEM DA LISTA, EXEMPLO QUINTAS --------
+
+head -> 10 -> 20 -> 40 -> 50->NULL
+
+-----------------------------------------------------*/
+
+
+int main()
+{
+    No* head = NULL;
+    insercao_inicio(&head, 50);
+    insercao_inicio(&head, 30);
+    insercao_inicio(&head, 20);
+    insercao_inicio(&head, 10);
+    insercao_inicio(&head, 40);
+    imprimir(head);
+    //remover_por_valor(&head, 20);
+    //imprimir(head);
+    reordenar(head);
+    imprimir(head);
+    //zerar_lista(&head);
+    //imprimir(head);
+    //int n = contar(head);
+    //printf("A quantidade de elementos eh: %d\n", n);
+    remover_ultimo(head);
+    imprimir(head);
+    
+
+
+
+
+   
+
+
+}
