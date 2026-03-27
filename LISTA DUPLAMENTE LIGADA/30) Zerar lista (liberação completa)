@@ -1,0 +1,148 @@
+
+
+
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef struct No {
+    int valor;
+    struct No* prox;
+    struct No* ant;
+}No;
+
+void inserir_inicio(No** head, int v) {
+    No* novo = malloc(sizeof(No));
+    if (novo == NULL);
+    novo->valor = v;
+    novo->ant = NULL;
+    novo->prox = *head;
+
+    if (*head != NULL) {
+        (*head)->ant = novo;
+    }
+
+    *head = novo;
+}
+
+void inserir_final(No** head, int v) {
+    No* novo = malloc(sizeof(No));
+    novo->valor = v;
+    novo->prox = NULL;
+
+    if (*head == NULL) {
+        novo->ant = NULL;
+        *head = novo;
+    }
+    else {
+        No* p = *head;
+        while (p->prox != NULL) {
+            p = p->prox;
+        }
+        p->prox = novo; //Aqui o p é o ultimo da lista, portanto como queremos que o "novo" seja o ultimo, ó proximo depois de p sera o novo
+        novo->ant = p; //O anterior do nosso novo no é o ultimo da lista
+    }
+}
+
+int apagar(No** head, int v) {
+    if (*head == NULL) printf("Lista Vazia\n");//lista vazia
+    No* p = *head;
+
+    // No esta  na cabeça
+    if (p->valor == v) {
+        *head = p->prox;
+        (*head)->ant = NULL;
+        free(p);
+        return;
+    }
+
+    while (p != NULL && p->valor != v) {
+        p = p->prox;
+    }
+
+    if (p == NULL) return;
+
+    //No está no  meio
+
+    if (p->prox != NULL) {
+        p->prox->ant = p->ant;
+        p->ant->prox = p->prox;
+        free(p);
+        return;
+    }
+
+    //No está no fim;
+    p->ant->prox = NULL;
+    free(p);
+  
+        
+}
+
+void imprimir(No* head) {
+    No* p = head;
+    if (p == NULL) {
+        printf("LISTA VAZIA");
+    }
+    printf("NULL");
+    while (p != NULL) {
+        printf("<- [%d] ->", p->valor);
+        p = p->prox;
+    }
+    printf("NULL");
+}
+
+void imprimir_inverso(No* head){
+    No * p = head;
+    
+    // percorrer até o final
+    while (p->prox != NULL) {
+        p = p->prox;
+        
+    }
+    // inverter a impressao
+    while (p != NULL) {
+        printf("<- [%d] ->", p->valor);
+        p = p->ant;
+    }
+    printf("NULL\n");
+}
+
+void zerar_lista(No** head) {
+    No* p = *head;
+
+    while (p != NULL) {
+        No* atual = p->prox;
+        free(p);
+        p = atual;
+    }
+    *head = NULL;
+
+}
+
+
+
+
+
+
+
+int main() {
+    No* head = NULL;
+
+    inserir_inicio(&head, 2);
+    inserir_inicio(&head, 27);
+    inserir_inicio(&head, 9);
+    inserir_inicio(&head, 16);
+    imprimir(head);
+    printf("\n---------------Invertido------------\n");
+    imprimir_inverso(head);
+    printf("\n-----------Adicionando no final---------\n");
+    inserir_final(&head, 13);
+    imprimir(head);
+    apagar(&head, 9);
+    printf("\n-----------removendo elemento---------\n");
+    imprimir(head);
+    printf("\n-----------zerando lista---------\n");
+    zerar_lista(&head);
+
+
+
+}
