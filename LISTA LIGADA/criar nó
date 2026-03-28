@@ -1,0 +1,7 @@
+No* Criar_no(int valor) {
+	No* novoNo = malloc(sizeof(No));
+	if (novoNo == NULL) return NULL;
+	novoNo->valor = valor;
+	novoNo->prox = NULL;
+	return novoNo;
+}
