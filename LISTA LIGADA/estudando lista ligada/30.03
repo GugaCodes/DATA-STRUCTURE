@@ -1,0 +1,139 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+typedef struct No {
+	int valor;
+	struct No* prox;
+}No;
+
+void imprimir(No* head) {
+	No* p = head;
+
+	while (p != NULL) {
+		printf("[%d] -> ", p->valor);
+		p = p->prox;
+	}
+	printf("NULL\n\n");
+}
+
+void inserir_inicio(No** head, int v) {
+	No* novo = malloc(sizeof(No));
+	if (novo == NULL) return;
+
+	novo->valor = v; // nosso Nó recebendo valor
+	novo->prox = *head; // apontando para o inicio da lista
+	*head = novo; //atualizando a lista
+}
+
+void inserir_final(No** head, int v) {
+	No* novo = malloc(sizeof(No));
+	if (novo == NULL) return;
+	No* p = *head;
+	novo->valor = v;
+	novo->prox = NULL;
+	if (*head == NULL) {
+		*head = novo;
+		return;
+	}
+	
+	while (p->prox != NULL) { // percorre até o ultimo elemento ser nulo
+		p = p->prox;
+		
+	}
+	p->prox = novo;
+	
+}
+
+void inserir_ordenado(No** head, int v) {
+	No* novo = malloc(sizeof(No));
+	novo->valor = v;
+
+	if (*head == NULL) return;
+
+	 // caso especial, se a lista estiver vazia e novo for menor q o valor da cabeça
+	if (*head == NULL || novo < *head) {
+		novo->prox = *head;
+		*head = novo;
+		return;
+	}
+
+	No* anterior = *head;
+	No* atual = (*head)->prox;
+	// caso geral, percorrendo a lista com 2 ponteiros
+	while (atual != NULL && atual->valor < v) {
+		anterior = atual;
+		atual = atual->prox;
+
+	}
+	anterior->prox = novo;
+	novo->prox = atual;
+}
+
+int busca(No* head, int v) {
+	No* p = head;
+	while (p != NULL) {
+		if (p == v) {
+			return p;
+		}
+		p = p->prox;
+	}
+	return NULL;
+
+}
+
+void buscar(No* head, int v) {
+	int resultado = busca(&head, v);
+	if (resultado) {
+		printf("Valor %d encontrado!\n", v);
+	}
+	else printf("Valor %d não encontrado\n", v);
+}
+
+void remover_valor(No** head, int v) {
+	if (*head == NULL == (*head)->valor == v) {
+		No* temp = *head;
+		*head = (*head)->prox;
+		free(temp);
+		return;
+	}
+
+	No* anterior = *head;
+	No* atual = (*head)->prox;
+
+	while (atual != NULL) {
+		if (atual == v) {
+			anterior->prox = atual->prox;
+			free(atual);
+		}
+		anterior = atual;
+		atual = atual->prox;
+	}
+}
+
+
+
+
+
+
+
+int main() {
+	No* head = NULL;
+	inserir_inicio(&head, 10);
+	imprimir(head);
+	inserir_final(&head, 15);
+	imprimir(head);
+	inserir_ordenado(&head, 20);
+	inserir_ordenado(&head, 800);
+	inserir_ordenado(&head, 30);
+	inserir_ordenado(&head, 10);
+	inserir_ordenado(&head, 35);
+	imprimir(head);
+	
+
+
+	
+	
+}
+
