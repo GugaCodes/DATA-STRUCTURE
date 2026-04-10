@@ -1,0 +1,98 @@
+/******************************************************************************
+
+Welcome to GDB Online.
+  GDB online is an online compiler and debugger tool for C, C++, Python, PHP, Ruby, 
+  C#, OCaml, VB, Perl, Swift, Prolog, Javascript, Pascal, COBOL, HTML, CSS, JS
+  Code, Compile, Run and Debug online from anywhere in world.
+
+*******************************************************************************/
+#include <stdio.h>
+#include <stdlib.h>
+
+
+typedef struct No{
+    int valor;
+    struct No *prox;
+    struct No *anterior;
+}No;
+
+typedef struct NoA{
+    int valor;
+    struct NoA* left;
+    struct NoA* right;
+}NoA;
+
+typedef struct NoD{
+    int valor;
+    struct No *prox;
+    struct No *anterior;
+}NoD;
+
+
+void imprimir(NoA *raiz){
+    NoA*p = raiz;
+    
+    while(p!=NULL){
+        printf("RAIZ: [%d] ->ESQUERDA: [%d]-> DIREITA[%d]\n", p->valor, p->left->valor, p->right->valor);
+        p = p->right;
+    }
+    printf("NULL");
+}
+
+/*void inserir_inicio(No**head, int v){ // LISTA LIGADA 
+    No* novo = malloc(sizeof(No));
+    if(novo == NULL)return;
+    
+    novo->valor = v;
+    novo->prox = *head;
+    *head = novo;
+}*/
+
+void inserir(NoA** raiz, int v){
+    NoA* novo = malloc(sizeof(NoA));
+    if(novo == NULL) return;
+    
+    novo->valor = v;
+    novo->right = NULL;
+    novo->left = NULL;
+    
+    if((*raiz) == NULL)
+    {
+        (*raiz) = novo;
+        return;
+    }
+    
+    NoA* atual = *raiz;
+    NoA* anterior = NULL;
+    
+    while(atual != NULL) {
+        anterior = atual;
+        if(v > atual->valor)
+            atual = atual->right;
+        else if(v < atual->valor)
+            atual = atual->left;
+    }
+    
+    if(v > anterior->valor)
+        anterior->right = novo;
+    else if(v < anterior->valor)
+        anterior->left = novo;
+}
+
+
+
+int main()
+{
+    NoA* head = NULL;
+    
+    inserir(&head,10);
+    inserir(&head,67);
+    inserir(&head,5);
+    inserir(&head,2);
+    inserir(&head,6);
+    
+    printf("Raiz: %d, Esquerda %d, Direita %d\n", head->valor, head->left->valor, head->right->valor);
+    printf("Raiz: %d, Esquerda %d, Direita %d", head->left->valor, head->left->left->valor, head->left->right->valor);
+    
+    return 0;
+}
