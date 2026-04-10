@@ -49,34 +49,35 @@ void imprimir(NoA *raiz){
 }*/
 
 void inserir(NoA** raiz, int v){
-    NoA* novo = malloc(sizeof(NoA));
-    if(novo == NULL) return;
+    NoA* novo = malloc(sizeof(NoA)); // ALOCAMOS LUGAR PARA A NOVA FOLHA DA ARVORE
+    if(novo == NULL) return; // SE FOR NULA, CABOU
     
-    novo->valor = v;
-    novo->right = NULL;
+    novo->valor = v; // COLOCA O VALOR LA NA FOLHA
+    novo->right = NULL; // COMO NAO TEM NADA PRA ESQUERDA E PRA DIREITA POR ENQUANTO VAI SER NULL
     novo->left = NULL;
     
-    if((*raiz) == NULL)
+    if((*raiz) == NULL) //SE NAO TIVER RAIZ
     {
-        (*raiz) = novo;
-        return;
+        (*raiz) = novo; // NOSSA RAIZ VAI SER A FOLHA LOGO DE CARA
+        return; // CABOU
     }
     
-    NoA* atual = *raiz;
-    NoA* anterior = NULL;
+    NoA* atual = *raiz; // VAMOS FAZER UMA FOLHA RESERVA QUE COMEÇA NA RAIZ
+    NoA* anterior = NULL; // ANTERIOR COMEÇA SENDO NULO
     
-    while(atual != NULL) {
-        anterior = atual;
-        if(v > atual->valor)
-            atual = atual->right;
-        else if(v < atual->valor)
-            atual = atual->left;
+    while(atual != NULL) { // ENQUANTO NAO CHEGAR NO TOPO DA ARVORE OU SEJA AINDA TEM MAIS FOLHA NA ESQUERDA OU DIREITA
+        anterior = atual; // O ANTERIOR VAI SER O ATUAL PQ DPS VAMOS MUDAR O ATUAL
+        if(v > atual->valor) // SE O VALOR INSERIDO FOR MAIOR QUE O VALOR DO ATUAL
+            atual = atual->right; //ANDA PRA DIREITA
+        else if(v < atual->valor)// SE O VALOR INSERIDO FOR MENOR QUE O VALOR DO ATUAL
+            atual = atual->left; //ANDA PRA ESQUERDA
     }
     
-    if(v > anterior->valor)
-        anterior->right = novo;
-    else if(v < anterior->valor)
-        anterior->left = novo;
+    //AQUI SAIMOS DO LOOP E O ANTERIOR É A ULTIMA FOLHA
+    if(v > anterior->valor) // SE O VALOR FOR MAIOR QUE A ULTIMA FOLHA
+        anterior->right = novo; // INSERIMOS NA DIREITA
+    else if(v < anterior->valor) // SE O VALOR FOR MENOR QUE O DA ULTIMA FOLHA
+        anterior->left = novo; // INSERIMOS NA ESQUERDA
 }
 
 
