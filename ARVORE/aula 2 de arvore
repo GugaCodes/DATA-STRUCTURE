@@ -1,0 +1,154 @@
+/******************************************************************************
+
+Welcome to GDB Online.
+  GDB online is an online compiler and debugger tool for C, C++, Python, PHP, Ruby,
+  C#, OCaml, VB, Perl, Swift, Prolog, Javascript, Pascal, COBOL, HTML, CSS, JS
+  Code, Compile, Run and Debug online from anywhere in world.
+
+*******************************************************************************/
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef struct NoA {
+    int valor;
+    struct NoA* esquerda;
+    struct NoA* direita;
+} NoA;
+
+NoA* criarNo(int v) {
+    NoA* novo = (NoA*)malloc(sizeof(NoA));
+    if (novo == NULL) return NULL;
+
+    novo->valor = v;
+    novo->direita = NULL;
+    novo->esquerda = NULL;
+
+    return novo;
+}
+
+void inserir(NoA** raiz, int v) {
+
+    NoA* novo = criarNo(v);
+
+    NoA* atual = *raiz;
+    NoA* anterior = NULL;
+
+    if (atual == NULL) {
+        *raiz = novo;
+        return;
+    }
+
+    while (atual != NULL) {
+        anterior = atual;
+        if (novo->valor > atual->valor)
+            atual = atual->direita;
+        else if (novo->valor < atual->valor) {
+            atual = atual->esquerda;
+        }
+
+    }
+
+    if (novo->valor > anterior->valor) {
+        anterior->direita = novo;
+    }
+    else if (novo->valor < anterior->valor) {
+        anterior->esquerda = novo;
+    }
+
+}
+
+NoA* inserirRecursivo(NoA* raiz, int v)
+{
+  
+
+
+    if (raiz == NULL) {return criarNo(v);}
+
+    if (v < raiz->valor)
+    {
+        raiz->esquerda = inserirRecursivo(raiz->esquerda, v);
+    }
+    else if (v > raiz->valor)
+    {
+        raiz->direita = inserirRecursivo(raiz->direita, v);
+    }
+
+    return raiz;
+}
+
+NoA* procurarRecursivo(NoA* raiz, int v)
+{
+    if(raiz == NULL){return NULL;}
+    
+    if(v < raiz->valor)
+    {
+        procurarRecursivo(raiz->esquerda, v);
+    }
+    else if (v > raiz->valor)
+    {
+        procurarRecursivo(raiz->direita, v);
+    }
+    else if (v == raiz->valor)
+    {
+        return raiz;
+    }
+}
+
+
+void printarNo(NoA* raiz)
+{
+    printf("Raiz: %d | Esquerda: %d | Direita: %d", raiz->valor, raiz->esquerda->valor, raiz->direita->valor);
+}
+
+
+int main()
+{
+    NoA* raiz = NULL;
+    
+    inserir(&raiz, 50);
+    inserir(&raiz, 30);
+    inserir(&raiz, 60);
+    
+    printf("Raiz: %d | Esquerda: %d | Direita: %d", raiz->valor, raiz->esquerda->valor, raiz->direita->valor);
+   
+    printf("\n---- recursivo -----\n");
+    NoA* raizRecursiva = NULL;
+    
+    raizRecursiva = inserirRecursivo(raizRecursiva, 50);
+    raizRecursiva = inserirRecursivo(raizRecursiva, 30);
+    raizRecursiva = inserirRecursivo(raizRecursiva, 40);
+    raizRecursiva = inserirRecursivo(raizRecursiva, 70);
+    raizRecursiva = inserirRecursivo(raizRecursiva, 80);
+    raizRecursiva = inserirRecursivo(raizRecursiva, 75);
+    raizRecursiva = inserirRecursivo(raizRecursiva, 90);
+    raizRecursiva = inserirRecursivo(raizRecursiva, 60);
+    raizRecursiva = inserirRecursivo(raizRecursiva, 20);
+    raizRecursiva = inserirRecursivo(raizRecursiva, 10);
+    
+    printf("Raiz: %d | Esquerda: %d | Direita: %d", raizRecursiva->valor, raizRecursiva->esquerda->valor, raizRecursiva->direita->valor);
+    
+    printf("\n---- procurando -----\n");
+    NoA* noProcurado = procurarRecursivo(raizRecursiva, 50);
+    if(noProcurado != NULL)
+    {
+        printf("Achei o nó: %d\n", noProcurado->valor);
+        
+        if(noProcurado->esquerda != NULL){
+            printf("Esquerda: %d | ", noProcurado->esquerda->valor);
+        } else
+        {
+            printf("Esquerda: NULL | ");
+        }
+            
+        if(noProcurado->direita != NULL){
+            printf("Direita: %d", noProcurado->direita->valor);
+        } else
+        {
+            printf("Direita: NULL");
+        }
+    }  
+    else
+        printf("Não achei, larga mão de ser viado");
+    
+    return 0;
+}
