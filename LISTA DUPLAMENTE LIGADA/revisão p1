@@ -1,0 +1,117 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+typedef struct No {
+	int valor;
+	struct No* ant;
+	struct No* prox;
+}No;
+
+void imprimir(No* head) {
+	No* p = head;
+	if (p == NULL) printf("Lista vazia\n\n");
+
+	while (p != NULL) {
+		printf("[%d] -> ", p->valor);
+		p = p->prox;
+	}
+	printf("NULL\n\n");
+}
+
+void inserir_inicio(No** head, int v) {
+	No* novo = malloc(sizeof(No));
+	if (novo == NULL) return;
+
+	novo->valor = v;
+	novo->prox = *head;
+	*head = novo;
+}
+
+void inserir_final(No** head, int v) {
+	No* novo = malloc(sizeof(No));
+	if (novo == NULL) return;
+
+	novo->valor = v;
+	novo->prox = NULL;
+
+	if (*head == NULL) {
+		*head = novo;
+		return;
+	}
+
+	No* p = *head;
+	while (p->prox != NULL) {
+		p = p->prox;
+	}
+	p->prox = novo;
+}
+
+void inserir_ordenado(No** head, int v) {
+	No* novo = malloc(sizeof(No));
+	if (novo == NULL) return;
+	novo->valor = v;
+
+	if (*head == NULL || v <= (*head)->valor) {
+		novo->prox = *head;
+		*head = novo;
+		return;
+	}
+
+	No* anterior = *head;
+	No* atual = (*head)->prox;
+
+	while (atual != NULL && (*head)->valor < v) {
+		anterior = atual;
+		atual = atual->prox;
+	}
+	anterior->prox = novo;
+	novo->prox = atual;
+}
+
+void remover(No** head, int v) {
+	if (*head == NULL || (*head)->valor == v) {
+		No* temp = *head;
+		*head = (*head)->prox;
+		free(temp);
+		return;
+	}
+}
+
+
+
+
+
+
+
+
+int main() {
+	No* head = NULL;
+	inserir_inicio(&head, 10);
+	inserir_inicio(&head, 50);
+	inserir_inicio(&head, 15);
+	inserir_inicio(&head, 13);
+	imprimir(head);
+
+	inserir_final(&head, 82);
+	inserir_final(&head, 72);
+	inserir_final(&head, 2);
+	inserir_final(&head, 52);
+	imprimir(head);
+	inserir_ordenado(&head, 5);
+
+	imprimir(head);
+
+	
+	
+
+
+
+
+}
+
+
+
+
+
