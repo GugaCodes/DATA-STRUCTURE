@@ -1,0 +1,171 @@
+/******************************************************************************
+
+                            Online C Compiler.
+                Code, Compile, Run and Debug C program online.
+Write your code in this editor and press "Run" button to compile and execute it.
+
+*******************************************************************************/
+
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef struct NoA {
+    int valor;
+    struct NoA* esquerda;
+    struct NoA* direita;
+}NoA;
+
+NoA* criarNo(int v) {
+    NoA* novo = malloc(sizeof(NoA));
+    if (novo == NULL) return NULL;
+
+    novo->valor = v;
+    novo->esquerda = NULL;
+    novo->direita = NULL;
+
+    return novo;
+}
+
+NoA* inserir_recursivo(NoA* raiz, int v) {
+    if (raiz == NULL) {
+        return criarNo(v);
+    }
+
+    if (v < raiz->valor) {
+        raiz->esquerda = inserir_recursivo(raiz->esquerda, v);
+    }
+    else if (v > raiz->valor) {
+        raiz->direita = inserir_recursivo(raiz->direita, v);
+    }
+
+    return raiz;
+}
+
+void printar_ordenado(NoA* raiz) 
+{
+    if (raiz == NULL)
+    {
+        return;
+    }
+        printar_ordenado(raiz->esquerda);
+        printf("%d ", raiz->valor);
+        printar_ordenado(raiz->direita);
+        
+    
+}
+
+void printar_posOrdem(NoA* raiz)
+{
+    if (raiz == NULL)
+    {
+        return;
+    }
+        printar_ordenado(raiz->esquerda);
+        printar_ordenado(raiz->direita);
+        printf("%d ", raiz->valor);
+    
+}
+
+void printar_preOrdem(NoA* raiz)
+{
+    if (raiz == NULL)
+    {
+        return;
+    }
+
+        printf("%d ", raiz->valor);
+        printar_ordenado(raiz->esquerda);
+        printar_ordenado(raiz->direita);
+    
+}
+
+NoA* minimo(NoA* raiz) {
+    while (raiz != NULL) {
+        raiz = raiz->esquerda;
+    }
+
+    return raiz;
+}
+
+NoA* remover(NoA* raiz, int v) {
+  
+    if (raiz == NULL) 
+    {
+        return NULL;
+    }
+
+    if (raiz->valor > v)
+    {
+        raiz->esquerda = remover(raiz->esquerda, v);
+    }
+    else if (raiz->valor < v) 
+    {
+        raiz->direita = remover(raiz->direita, v);
+    }
+    else
+    {
+
+        //caso 1 - Sem filhos
+        if (raiz->esquerda == NULL && raiz->direita == NULL) {
+            free(raiz);
+            return raiz;
+        }
+
+        //caso 2a - filho a esquerda
+        if (raiz->esquerda == NULL) {
+            NoA* filho = raiz->direita;
+            free(raiz);
+            return filho;
+
+        }
+
+        //caso 2b - filho a direita
+        if (raiz->direita == NULL) {
+            NoA* filho = raiz->esquerda;
+            free(raiz);
+            return filho;
+        }
+
+        //caso 3 - dois filhos
+
+        NoA* sucessor = minimo(raiz->direita);
+        raiz->valor = sucessor->valor;
+        raiz->direita = remover(raiz->direita, sucessor->valor);
+    }
+    return raiz;
+    
+    
+   
+}
+int main()
+{
+    NoA* raiz_recursiva = NULL;
+
+    raiz_recursiva = inserir_recursivo(raiz_recursiva, 30);
+    raiz_recursiva = inserir_recursivo(raiz_recursiva, 40);
+    raiz_recursiva = inserir_recursivo(raiz_recursiva, 20);
+    raiz_recursiva = inserir_recursivo(raiz_recursiva, 25);
+    raiz_recursiva = inserir_recursivo(raiz_recursiva, 52);
+    raiz_recursiva = inserir_recursivo(raiz_recursiva, 1000);
+
+    
+
+    printf("---------- Printando--------------\n\n");
+    printf("Raiz: %d | esquerda: %d | Direita: %d\n\n", raiz_recursiva->valor, raiz_recursiva->esquerda->valor, raiz_recursiva->direita->valor);
+
+
+
+    printf("---------- Printando Ordenado --------------\n\n");
+
+    printar_ordenado(raiz_recursiva);
+    printf("\n");
+    printf("---------- Printando em ordem de insersao --------------\n\n");
+    printar_preOrdem(raiz_recursiva);
+    printf("\n\n");
+    printf("---------- Printando pos ordem --------------\n\n");
+    printar_posOrdem(raiz_recursiva);
+
+
+
+
+}
